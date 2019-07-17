@@ -19,7 +19,10 @@ var currentId = location.search.substring(1) || '6ring';
 onpopstate = function(event) { select(event.state.id, true) };
 addEventListener('DOMContentLoaded', function(even) { select(currentId, true) });
 
-function select(id, replace) {
+function select(id, replace, event) {
+    if(event && (event.ctrlKey || event.shiftKey))
+        return;
+
     currentId = id;
     let m = mHash[id];
 
@@ -35,26 +38,38 @@ function select(id, replace) {
     return false;
 }
 
-function selectRandom() {
+function selectRandom(event) {
+    if(event && (event.ctrlKey || event.shiftKey))
+        return;
+
     let idx = Math.floor(Math.random() * (mList.length - mHead - 1)) + mHead;
     if(idx >= mHash[currentId].pos) ++idx;
     select(mList[idx].id);
     return false;
 }
 
-function selectNext() {
+function selectNext(event) {
+    if(event && (event.ctrlKey || event.shiftKey))
+        return;
+
     let pos = mHash[currentId].pos + 1;
     select(mList[mHead <= pos && pos < mList.length ? pos : mHead].id);
     return false;
 }
 
-function selectPrev() {
+function selectPrev(event) {
+    if(event && (event.ctrlKey || event.shiftKey))
+        return;
+
     let pos = mHash[currentId].pos - 1;
     select(mList[pos >= mHead ? pos : mList.length - 1].id);
     return false;
 }
 
-function navigate(url) {
+function navigate(url, event) {
+    if(event && (event.ctrlKey || event.shiftKey))
+        return;
+
     location.href = url;
     return false;
 }

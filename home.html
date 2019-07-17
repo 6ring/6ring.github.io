@@ -20,7 +20,7 @@ p a:before { content: '\21BA\A0' }
 <img src="camelia.png" width="261" height="243" id="camelia">
 <h1>🦋 Welcome to the Perl 6 Webring</h1>
 <p>
-Feel free to drop by in our <a href="https://webchat.freenode.net/#perl6-webring" onclick="return parent.select('irc')">IRC chatroom</a>. If you have discovered an error or want to request a feature, you can add a ticket to the <a href="https://github.com/6ring/6ring.github.io/issues" onclick="return parent.navigate('https://github.com/6ring/6ring.github.io/issues')">issue tracker</a>.
+Feel free to drop by in our <a href="https://webchat.freenode.net/#perl6-webring" onclick="return parent.select('irc', false, event)">IRC chatroom</a>. If you have discovered an error or want to request a feature, you can add a ticket to the <a href="https://github.com/6ring/6ring.github.io/issues" onclick="return parent.navigate('https://github.com/6ring/6ring.github.io/issues', event)">issue tracker</a>.
 </p>
 <h2>Our Member Sites</h2>
 <ul>
@@ -28,7 +28,7 @@ Feel free to drop by in our <a href="https://webchat.freenode.net/#perl6-webring
 for(let i = mHead; i < mList.length; ++i) {
     let m = mList[i];
     document.write('<li><a href="' + m.url + '" onclick="return parent.select(\''
-        + m.id + '\')">' + m.icon + ' ' + m.name + '</li>');
+        + m.id + '\', false, event)">' + m.icon + ' ' + m.name + '</li>');
 }
 </script>
 </ul>
