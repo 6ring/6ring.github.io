@@ -1,7 +1,10 @@
-var mHead = 2;
+var mHead = 2; // number of sites to skip at the beginning of the list
 var mHash = {}, mList = [
+    // infrastructural sites, not part of the ring proper
     [ "🦋", "6ring", "Ring Home", "home.html" ],
     [ "💬", "irc", "Ring Chat", "https://webchat.freenode.net/#perl6-webring" ],
+
+    // member sites
     [ "🔗", "cygx", "cygx's musings", "https://cygx.github.io/" ],
     [ "🔗", "timotimo", "my Timotimo \\this", "https://wakelift.de/"],
 ];
