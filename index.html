@@ -34,7 +34,7 @@ function select(id, replace, event) {
     else history.pushState(m, m.name, address);
 
     document.title = '6ring · ' + m.name;
-    frames[0].location.href = m.url;
+    frames[0].location.replace(m.url);
     return false;
 }
 
