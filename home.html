@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 <title>Ring Home</title>
 <style type="text/css">
-body { font-family: sans-serif; padding-left: 1em; max-width: calc(40em + 261px); margin: auto; margin-bottom: 3em; }
+body { font-family: sans-serif; padding-left: 1em; max-width: calc(40em + 261px); margin: auto; margin-bottom: 4em; }
 h1 { font-size: 2em; }
 h2 { font-size: 1.5em; margin-top: 1.5em; }
-ul { list-style-type: none; padding-left: 1em; }
-li { line-height: 2em; }
+dl { margin-left: 1em; }
+dd { margin: 0.5em 0 1.5em 2.5em; }
 a { text-decoration: none; }
 p a:before { content: '\21BA\A0' }
 #camelia { margin-right: 1em; float: right; }
@@ -30,10 +30,11 @@ To join the ring, add yourself to the list found in <a href="https://github.com/
 let code = '';
 for(let i = mHead; i < mList.length; ++i) {
     let m = mList[i];
-    code += '<li><a href="' + m.url + '" onclick="return parent.select(\''
-        + m.id + '\', false, event)">' + m.icon + ' ' + m.name + '</a></li>';
+    code += '<dt><a href="' + m.url + '" onclick="return parent.select(\''
+        + m.id + '\', false, event)">' + m.icon + ' ' + m.name + '</a></dt><dd>'
+        + m.description + '</dd>';
 }
-document.write('<ul>' + code + '</ul>');
+document.write('<dl>' + code + '</dl>');
 </script>
 </body>
 </html>

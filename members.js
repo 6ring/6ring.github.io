@@ -5,8 +5,8 @@ var mHash = {}, mList = [
     [ "💬", "irc", "Ring Chat", "https://webchat.freenode.net/#perl6-webring" ],
 
     // member sites
-    [ "🔗", "cygx", "cygx's musings", "https://cygx.github.io/" ],
-    [ "🔗", "timotimo", "my Timotimo \\this", "https://wakelift.de/"],
+    [ "🔗", "cygx", "cygx's musings", "https://cygx.github.io/", "life, the universe and programming woes" ],
+    [ "🔗", "timotimo", "my Timotimo \\this", "https://wakelift.de/", "Progress reports, general musings. Perl 6." ],
 ];
 
 let i = 0;
@@ -15,6 +15,7 @@ for(let m of mList) {
         id: m[1],
         name: m[2],
         url: m[3],
+        description: m[4],
         icon: m[0],
         pos: i,
     };
