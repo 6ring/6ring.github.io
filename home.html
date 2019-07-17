@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+<title>Perl 6 Webring</title>
+<style type="text/css">
+body { font-family: sans-serif; }
+ul { list-style-type: square; }
+li { margin: 0.5em; }
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+</style>
+<script type="text/javascript" src="members.js"></script>
+</head>
+<body>
+<ul>
+<script type="text/javascript">
+for(m of mList) {
+    document.write('<li><a href="' + m.url + '" onclick="parent.select(\''
+        + m.id + '\'); return false">' + m.icon + ' ' + m.name + '</li>');
+}
+</script>
+</ul>
+</body>
+</html>

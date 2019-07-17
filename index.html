@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+<title>6ring · Perl 6 Webring</title>
+<style type="text/css">
+html, body, iframe { margin: 0; padding: 0; width: 100%; height: 100%; }
+button, select { border: 0 none; height: 2em; }
+button { cursor: pointer; }
+label { float: left; }
+#bar { border-bottom: 1px solid black; background: buttonface; }
+iframe { border: 0 none; height: calc(100% - 2em); }
+a { text-decoration: none; }
+</style>
+<script type="text/javascript" src="members.js"></script>
+<script type="text/javascript">
+var currentId = location.search.substring(1) || '6ring';
+onpopstate = function(event) { select(event.state.id, true) };
+addEventListener('DOMContentLoaded', function(even) { select(currentId, true) });
+
+function select(id, replace) {
+    currentId = id;
+    let m = mHash[id];
+
+    let opt = document.getElementById(id);
+    opt.selected = true;
+
+    let address = id == '6ring' ? '?' : '?' + id;
+    if(replace) history.replaceState(m, m.name, address);
+    else history.pushState(m, m.name, address);
+
+    document.title = '6ring · ' + m.name;
+    frames[0].location.href = m.url;
+}
+
+function selectRandom() {
+    let idx = Math.floor(Math.random() * (mList.length - 1))
+    if(idx >= mHash[currentId].pos) ++idx;
+    select(mList[idx].id);
+}
+
+function selectNext() {
+    let pos = mHash[currentId].pos;
+    select(mList[pos < mList.length - 1 ? pos + 1 : 0].id);
+}
+
+function selectPrev() {
+    let pos = mHash[currentId].pos;
+    select(mList[pos > 0 ? pos - 1 : mList.length - 1].id);
+}
+
+function navigate(url) {
+    location.href = url;
+}
+</script>
+</head>
+<body>
+<div id="bar">
+<button onclick="selectPrev()" title="previous site in ring">⮜⮜</button>
+<select size="1"  onchange="select(this.options[this.selectedIndex].id)">
+<script type="text/javascript">
+for(let m of mList) {
+    document.write(
+        '<option id="' + m.id + '" value="' + m.url
+            + '" data-name="' + m.name + '">'
+            + m.icon + ' ' + m.name + '</option>');
+}
+</script>
+</select>
+<button onclick="selectNext()" title="next site in ring">⮞⮞</button>
+<button onclick="select('6ring')" title="ring home">🦋</button>
+<button onclick="navigate(mHash[currentId].url)" title="leave ring">❌</button>
+<button onclick="selectRandom()" title="random site">🎲</button>
+<button onclick="select('freenode')" title="freenode chat">💬</button>
+<button onclick="navigate('https://github.com/6ring/6ring.github.io/issues')" title="bug tracker">🐞</button>
+</div>
+<iframe id="frame" src="home.html"></iframe>
+</body>
+</html>
