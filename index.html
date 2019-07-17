@@ -78,16 +78,18 @@ function navigate(url, event) {
 <body>
 <div id="bar">
 <button onclick="selectPrev()" title="previous member site">⮜⮜</button>
-<select size="1"  onchange="select(this.options[this.selectedIndex].id)">
 <script type="text/javascript">
+let code = '';
 for(let m of mList) {
-    document.write(
-        '<option id="' + m.id + '" value="' + m.url
-            + '" data-name="' + m.name + '">'
-            + m.icon + ' ' + m.name + '</option>');
+    code +=  '<option id="' + m.id + '" value="' + m.url
+        + '" data-name="' + m.name + '">'
+        + m.icon + ' ' + m.name + '</option>';
 }
+
+document.write(
+    '<select size="1"  onchange="select(this.options[this.selectedIndex].id)">'
+        + code + '</select>');
 </script>
-</select>
 <button onclick="selectNext()" title="next member site">⮞⮞</button>
 <button onclick="selectRandom()" title="random member site">🎲</button>
 <button onclick="select('6ring')" title="ring home">🦋</button>
