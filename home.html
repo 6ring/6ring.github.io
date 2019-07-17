@@ -5,20 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 <title>Perl 6 Webring</title>
 <style type="text/css">
-body { font-family: sans-serif; }
-ul { list-style-type: square; }
-li { margin: 0.5em; }
+body { font-family: sans-serif; padding-left: 1em; max-width: calc(40em + 261px); margin: auto; }
+h1 { font-size: 2em; }
+h2 { font-size: 1.5em; margin-top: 1.5em; }
+ul { list-style-type: none; padding-left: 1em; }
+li { line-height: 2em; }
 a { text-decoration: none; }
-a:hover { text-decoration: underline; }
+p a:before { content: '\21BA\A0' }
+#camelia { margin-right: 1em; float: right; }
 </style>
 <script type="text/javascript" src="members.js"></script>
 </head>
 <body>
+<img src="camelia.png" width="261" height="243" id="camelia">
+<h1>🦋 Welcome to the Perl 6 Webring</h1>
+<p>
+Feel free to drop by in our <a href="https://webchat.freenode.net/#perl6-webring" onclick="return parent.select('irc')">IRC chatroom</a>. If you have discovered an error or want to request a feature, you can add a ticket to the <a href="https://github.com/6ring/6ring.github.io/issues" onclick="return parent.navigate()">issue tracker</a>.
+</p>
+<h2>Our Member Sites</h2>
 <ul>
 <script type="text/javascript">
-for(m of mList) {
-    document.write('<li><a href="' + m.url + '" onclick="parent.select(\''
-        + m.id + '\'); return false">' + m.icon + ' ' + m.name + '</li>');
+for(let i = mHead; i < mList.length; ++i) {
+    let m = mList[i];
+    document.write('<li><a href="' + m.url + '" onclick="return parent.select(\''
+        + m.id + '\')">' + m.icon + ' ' + m.name + '</li>');
 }
 </script>
 </ul>

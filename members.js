@@ -1,6 +1,7 @@
+var mHead = 2;
 var mHash = {}, mList = [
-    [ "🦋", "6ring", "Perl 6 Webring", "home.html" ],
-    [ "💬", "freenode", "freenode #perl6-webring", "https://webchat.freenode.net/#perl6-webring" ],
+    [ "🦋", "6ring", "Ring Home", "home.html" ],
+    [ "💬", "irc", "Ring Chat", "https://webchat.freenode.net/#perl6-webring" ],
     [ "🔗", "cygx", "cygx's musings", "https://cygx.github.io/" ],
     [ "🔗", "timotimo", "my Timotimo \\this", "https://wakelift.de/"],
 ];
