@@ -11,8 +11,9 @@ document.addEventListener('click', function(event) {
         || event.ctrlKey || event.shiftKey) return;
 
     let url = event.target.href;
-    if(new URL(url, location.href).origin !== location.origin) {
-        event.preventDefault();
-        top.location.href = url;
-    }
+    if(new URL(url, location.href).origin === location.origin
+        || url.startsWith('https://6ring.github.io/')) return;
+
+    event.preventDefault();
+    top.location.href = url;
 }, false);
