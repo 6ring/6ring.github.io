@@ -7,6 +7,7 @@ var mHash = {}, mList = [
     // member sites
     [ "🔗", "cygx", "cygx's musings", "https://cygx.github.io/", "life, the universe and programming woes" ],
     [ "🔗", "timotimo", "my Timotimo \\this", "https://wakelift.de/", "Progress reports, general musings. Perl 6." ],
+    [ "🔗", "6guts", "6guts blog", "https://6guts.wordpress.com/", "Tales of Perl 6 guts hacking" ],
 ];
 
 let i = 0;
