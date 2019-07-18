@@ -6,7 +6,8 @@
 let id = location.search.substring(1);
 let pos = mHash[id].pos + 1;
 let mem = mList[mHead <= pos && pos < mList.length ? pos : mHead];
-if(top != self) top.location.href = 'https://6ring.github.io/?' + mem.id;
+if(top.name == 'sixring')
+    top.location.href = 'https://6ring.github.io/?' + mem.id;
 else location.replace(mem.url);
 </script>
 <noscript>ENOJAVASCRIPT</noscript>
