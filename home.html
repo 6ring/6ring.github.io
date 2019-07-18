@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8"></meta>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ring Home</title>
 <style type="text/css">
 body { font-family: sans-serif; padding-left: 1em; max-width: calc(40em + 261px); margin: auto; margin-bottom: 4em; }
@@ -16,22 +16,23 @@ p a:before { content: '\21BA\A0' }
 #camelia { margin-right: 1em; float: right; }
 </style>
 <script type="text/javascript" src="members.js"></script>
+<script type="text/javascript" src="6ring.js"></script>
 </head>
 <body>
 <img src="camelia.png" width="261" height="243" id="camelia">
 <h1>🦋&nbsp;Welcome to the Perl 6 Webring</h1>
 <p>
-Feel free to drop by in our <a href="https://webchat.freenode.net/#perl6-webring" onclick="return parent.select('irc', false, event)">IRC chatroom</a>. If you have a problem with the site or want to request a new feature, you can add a ticket to the <a href="https://github.com/6ring/6ring.github.io/issues" onclick="return parent.navigate(this.href, event)">issue tracker</a>.
+Feel free to drop by in our <a href="https://webchat.freenode.net/#perl6-webring" onclick="parent.select('irc', false, event)">IRC chatroom</a>. If you have a problem with the site or want to request a new feature, you can add a ticket to the <a href="https://github.com/6ring/6ring.github.io/issues">issue tracker</a>.
 </p>
 <p>
-If you want to keep up with all the things happening in the Perl 6 world in other ways, there are the <a href="https://p6weekly.wordpress.com/" onclick="return parent.navigate(this.href, event)">weekly summaries</a> and the <a href="http://pl6anet.org/" onclick="return parent.navigate(this.href, event)">pl6anet feed aggregator</a>.
+If you want to keep up with all the things happening in the Perl 6 world in other ways, there are the <a href="https://p6weekly.wordpress.com/">weekly summaries</a> and the <a href="http://pl6anet.org/">pl6anet feed aggregator</a>.
 </p>
 <h2>Our Member Sites</h2>
 <script type="text/javascript">
 let code = '';
 for(let i = mHead; i < mList.length; ++i) {
     let m = mList[i];
-    code += '<dt><a href="' + m.url + '" onclick="return parent.select(\''
+    code += '<dt><a href="' + m.url + '" onclick="parent.select(\''
         + m.id + '\', false, event)">' + m.icon + ' ' + m.name + '</a></dt><dd>'
         + m.description + '</dd>';
 }
@@ -39,7 +40,7 @@ document.write('<dl>' + code + '</dl>');
 </script>
 <h2>Join Us Now!</h2>
 <p>
-To join the ring, all that has to be done is adding your site to the list found in <a href="https://github.com/6ring/6ring.github.io/blob/master/members.js" onclick="return parent.navigate(this.href, event)">this source file</a> in our GitHub repository. 
+To join the ring, all that has to be done is adding your site to the list found in <a href="https://github.com/6ring/6ring.github.io/blob/master/members.js">this source file</a> in our GitHub repository.
 </p>
 <p>
 To improve discoverability, you may also want to embed the following links in your site:

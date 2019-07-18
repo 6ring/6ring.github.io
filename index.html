@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8"></meta>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>6ring · Ring Home</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <style type="text/css">
@@ -26,8 +26,17 @@ var currentId = location.search.substring(1) || '6ring';
 onpopstate = function(event) { select(event.state.id, true) };
 addEventListener('DOMContentLoaded', function(even) { select(currentId, true) });
 
+function letItPass(event) {
+    if(event.ctrlKey || event.shiftKey)
+        return true;
+
+    event.stopPropagation();
+    event.preventDefault();
+    return false;
+}
+
 function select(id, replace, event) {
-    if(event && (event.ctrlKey || event.shiftKey))
+    if(event && letItPass(event))
         return;
 
     currentId = id;
@@ -42,43 +51,38 @@ function select(id, replace, event) {
 
     document.title = '6ring · ' + m.name;
     frames[0].location.replace(m.url);
-    return false;
 }
 
 function selectRandom(event) {
-    if(event && (event.ctrlKey || event.shiftKey))
+    if(event && letItPass(event))
         return;
 
     let idx = Math.floor(Math.random() * (mList.length - mHead - 1)) + mHead;
     if(idx >= mHash[currentId].pos) ++idx;
     select(mList[idx].id);
-    return false;
 }
 
 function selectNext(event) {
-    if(event && (event.ctrlKey || event.shiftKey))
+    if(event && letItPass(event))
         return;
 
     let pos = mHash[currentId].pos + 1;
     select(mList[mHead <= pos && pos < mList.length ? pos : mHead].id);
-    return false;
 }
 
 function selectPrev(event) {
-    if(event && (event.ctrlKey || event.shiftKey))
+    if(event && letItPass(event))
         return;
 
     let pos = mHash[currentId].pos - 1;
     select(mList[pos >= mHead ? pos : mList.length - 1].id);
-    return false;
 }
 
 function navigate(url, event) {
-    if(event && (event.ctrlKey || event.shiftKey))
+    if(event && letItPass(event))
         return;
 
     location.href = url;
-    return false;
 }
 
 function exit() {
