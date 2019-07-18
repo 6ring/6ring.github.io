@@ -11,7 +11,7 @@ through the webring interface:
 
 There's also a 'magical' script you can add to your site's template:
 
-  <script src="https://6ring.github.io/6ring.js" type="text/javascript"></script>
+    <script src="https://6ring.github.io/6ring.js" type="text/javascript"></script>
 
 This will enable some convenience features otherwise prohibited by the
 same-origin policy, e.g. loading the currently active page instead of your
