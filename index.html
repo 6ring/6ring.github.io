@@ -16,6 +16,9 @@ a { text-decoration: none; }
 </style>
 <script type="text/javascript" src="members.js"></script>
 <script type="text/javascript">
+if(top != self)
+    top.location = self.location;
+
 var currentId = location.search.substring(1) || '6ring';
 onpopstate = function(event) { select(event.state.id, true) };
 addEventListener('DOMContentLoaded', function(even) { select(currentId, true) });
