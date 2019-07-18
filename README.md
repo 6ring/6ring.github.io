@@ -1,9 +1,11 @@
-This is a webring dedicated to Perl 6. To join up, add your site to the list
-in `members.js`. Note that only https sites are supported.
+**This is a [webring][1] dedicated to Perl 6.**
+
+To join up, add your site to the list in [members.js][2]. Please note that
+only https sites are supported.
 
 You may want to add the following links to your site's navigation so visitors
 may follow along the ring even when they visited the site directly instead of
-through the webring interface:
+going through the webring interface:
 
     https://6ring.github.io/?<your-site-id>
     https://6ring.github.io/prev?<your-site-id>
@@ -18,3 +20,6 @@ same-origin policy, e.g. loading the currently active page instead of your
 frontpage when exiting the ring, or having external links break out of the
 frame. If your site is heavily scripted, you should test that this does not
 interact badly with the rest of your code.
+
+[1]: https://en.wikipedia.org/wiki/Webring
+[2]: members.js
