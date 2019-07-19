@@ -11,6 +11,8 @@ button, select { border: 0 none; height: calc(100% - 1px); margin: 0; }
 button { cursor: pointer; }
 #bar { border-bottom: 1px solid black; background: buttonface; height: 2em; overflow: hidden; }
 iframe { display: block; border: 0 none; height: calc(100% - 2em - 1px); }
+.open .hidden { display: none; }
+.closed .shown { display: none; }
 </style>
 <script type="text/javascript" src="members.js"></script>
 <script type="text/javascript">
@@ -94,8 +96,10 @@ function exit() {
 </script>
 </head>
 <body>
-<div id="bar"><button
- onclick="selectPrev()" title="previous member site">⮜⮜ prev</button><script
+<div id="bar" class="open"><button
+ onclick="this.parentNode.className = 'closed'" title="hide navigation" class="shown">◁ ≡</button><button
+ onclick="this.parentNode.className = 'open'" title="show navigation" class="hidden">≡ ▷</button><button
+ onclick="selectPrev()" title="previous member site" class="shown">⮜⮜ prev</button><script
  type="text/javascript">
 let code = '';
 for(let m of mList) {
@@ -105,16 +109,16 @@ for(let m of mList) {
 }
 
 document.write(
-    '<select size="1"  onchange="select(this.options[this.selectedIndex].id)">'
+    '<select size="1" class="shown" '
+        + 'onchange="select(this.options[this.selectedIndex].id)">'
         + code + '</select>');
 </script><button
- onclick="selectNext()" title="next member site">next ⮞⮞</button><button
+ onclick="selectNext()" title="next member site" class="shown">next ⮞⮞</button><button
  onclick="selectRandom()" title="random member site">🎲 random</button><button
  onclick="select('6ring')" title="ring home">🦋 home</button><button
  onclick="select('irc')" title="IRC chat">💬 chat</button><button
  onclick="exit()" title="unload ring">❌ exit</button><button
- onclick="navigate('https://github.com/6ring/6ring.github.io/issues')"
- title="bug tracker">🐞 bugs</button></div>
+ onclick="navigate('https://github.com/6ring/6ring.github.io/issues')" title="bug tracker">🐞 bugs</button></div>
 <iframe id="frame" src="home.html"></iframe>
 </body>
 </html>
