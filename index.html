@@ -16,13 +16,12 @@ iframe { display: block; border: 0 none; height: calc(100% - 2em - 1px); }
 </style>
 <script type="text/javascript" src="members.js"></script>
 <script type="text/javascript">
-self.name = 'sixring';
-onunload = function(event) { self.name = '' };
-
-if(top != self)
-    top.location = self.location;
-
 {
+    if(top != self)
+        top.location = self.location;
+
+    self.name = 'sixring';
+
     let [id, url] = location.search.substring(1).split('&', 2);
     var currentId = id || '6ring';
 
@@ -31,18 +30,13 @@ if(top != self)
 
     if(url && url.startsWith(currentUrl)) {
         currentUrl = url;
-        history.replaceState(member, member.name, '?' + currentId)
+        history.replaceState({ url: currentUrl }, member.name, '?' + currentId);
     }
 }
 
-addEventListener('popstate', function(event) {
-    select(event.state.id, true);
-});
-
-addEventListener('DOMContentLoaded', function(event) {
-    document.getElementById(currentId).selected = true;
-});
-
+addEventListener('unload', function(event) { self.name = '' });
+addEventListener('DOMContentLoaded', update);
+addEventListener('popstate', update);
 addEventListener('message', function(event) {
     switch(event.data.action) {
         case 'clear':
@@ -50,6 +44,15 @@ addEventListener('message', function(event) {
         break;
     }
 });
+
+function update(event) {
+    if(history.state && history.state.url)
+        currentUrl = history.state.url;
+
+    document.title = '6ring · ' + mHash[currentId].name;
+    document.getElementById(currentId).selected = true;
+    frames[0].location.replace(currentUrl);
+}
 
 function letItPass(event) {
     if(event.ctrlKey || event.shiftKey)
@@ -66,14 +69,13 @@ function select(id, replace, event) {
 
     currentId = id;
     let m = mHash[id];
-
-    let opt = document.getElementById(id);
-    opt.selected = true;
-
     let address = id == '6ring' ? '?' : '?' + id;
-    if(replace) history.replaceState(m, m.name, address);
-    else history.pushState(m, m.name, address);
+    let state = { url: m.url };
 
+    if(replace) history.replaceState(state, m.name, address);
+    else history.pushState(state, m.name, address);
+
+    document.getElementById(id).selected = true;
     document.title = '6ring · ' + m.name;
     frames[0].location.replace(m.url);
 }
@@ -140,9 +142,6 @@ document.write(
  onclick="select('irc')" title="IRC chat">💬 chat</button><button
  onclick="exit()" title="unload ring">❌ exit</button><button
  onclick="navigate('https://github.com/6ring/6ring.github.io/issues')" title="bug tracker">🐞 bugs</button></div>
- <script type="text/javascript">
-document.write('<iframe id="frame" src="' + currentUrl + '"></iframe>');
- </script>
- <noscript><div>ENOJAVASCRIPT</div></noscript>
+<iframe src="about:blank"></iframe>
 </body>
 </html>
