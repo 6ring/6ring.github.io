@@ -14,7 +14,10 @@ document.addEventListener('click', function(event) {
         || event.ctrlKey || event.shiftKey) return;
 
     let url = event.target.href;
-    if(new URL(url, location.href).origin === location.origin
+    if(url.startsWith('https://6ring.github.io/?'))
+        url += '&' + location.origin + location.pathname;
+
+    else if(new URL(url, location.href).origin === location.origin
         || url.startsWith('https://6ring.github.io/')) return;
 
     event.preventDefault();

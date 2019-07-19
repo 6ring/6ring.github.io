@@ -22,8 +22,22 @@ onunload = function(event) { self.name = '' };
 if(top != self)
     top.location = self.location;
 
-var currentId = location.search.substring(1) || '6ring';
-onpopstate = function(event) { select(event.state.id, true) };
+{
+    let [id, url] = location.search.substring(1).split('&', 2);
+    var currentId = id || '6ring';
+
+    let member = mHash[currentId];
+    var currentUrl = member.url;
+
+    if(url && url.startsWith(currentUrl)) {
+        currentUrl = url;
+        history.replaceState(member, member.name, '?' + currentId)
+    }
+}
+
+addEventListener('popstate', function(event) {
+    select(event.state.id, true);
+});
 
 addEventListener('DOMContentLoaded', function(event) {
     document.getElementById(currentId).selected = true;
@@ -127,7 +141,7 @@ document.write(
  onclick="exit()" title="unload ring">❌ exit</button><button
  onclick="navigate('https://github.com/6ring/6ring.github.io/issues')" title="bug tracker">🐞 bugs</button></div>
  <script type="text/javascript">
-document.write('<iframe id="frame" src="' + mHash[currentId].url + '"></iframe>');
+document.write('<iframe id="frame" src="' + currentUrl + '"></iframe>');
  </script>
  <noscript><div>ENOJAVASCRIPT</div></noscript>
 </body>
