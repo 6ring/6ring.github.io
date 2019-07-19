@@ -3,11 +3,6 @@
 <title>6ring next</title>
 <script type="text/javascript" src="members.js"></script>
 <script type="text/javascript">
-let id = location.search.substring(1);
-let pos = mHash[id].pos + 1;
-let mem = mList[mHead <= pos && pos < mList.length ? pos : mHead];
-if(top.name == 'sixring')
-    top.location.href = 'https://6ring.github.io/?' + mem.id;
-else location.replace(mem.url);
+location.replace(members.next(location.search.substring(1)).url);
 </script>
 <noscript>ENOJAVASCRIPT</noscript>
