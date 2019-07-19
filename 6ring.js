@@ -1,25 +1,29 @@
-window.addEventListener('message', function(event) {
+addEventListener('message', function(event) {
    if(event.origin === 'https://6ring.github.io') switch(event.data.action) {
         case 'exit':
         top.postMessage(
-            { action: 'clear', timer: event.data.timer },
-            'https://6ring.github.io');
-        top.location = self.location;
+            { action: 'load-url', url: location.href, referrer: location.href },
+            'https://6ring.github.io'
+        );
         break;
     }
-}, false);
+});
 
-document.addEventListener('click', function(event) {
-    if(event.target.nodeName.toUpperCase() !== 'A'
-        || event.ctrlKey || event.shiftKey) return;
+addEventListener('DOMContentLoaded', function(event) {
+    if(top.name === 'sixring') {
+        top.postMessage(
+            { action: 'set-title', title: document.title },
+            'https://6ring.github.io'
+        );
+    }
+});
 
-    let url = event.target.href;
-    if(url.startsWith('https://6ring.github.io/?'))
-        url += '&' + location.origin + location.pathname;
-
-    else if(new URL(url, location.href).origin === location.origin
-        || url.startsWith('https://6ring.github.io/')) return;
-
-    event.preventDefault();
-    top.location.href = url;
-}, false);
+addEventListener('beforeunload', function(event) {
+    let url = document.activeElement.href || document.activeElement.dataset.href;
+    if(url && top.name === 'sixring') {
+        top.postMessage(
+            { action: 'load-url', url: url, referrer: location.href },
+            'https://6ring.github.io'
+        );
+    }
+});
