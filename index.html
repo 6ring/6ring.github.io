@@ -7,12 +7,10 @@
 <link rel="icon" type="image/png" href="favicon.png">
 <style type="text/css">
 html, body, iframe { margin: 0; padding: 0; width: 100%; height: 100%; }
-button, select { border: 0 none; height: 2em; }
+button, select { border: 0 none; height: calc(100% - 1px); margin: 0; }
 button { cursor: pointer; }
-label { float: left; }
-#bar { border-bottom: 1px solid black; background: buttonface; }
-iframe { border: 0 none; height: calc(100% - 2em); }
-a { text-decoration: none; }
+#bar { border-bottom: 1px solid black; background: buttonface; height: 2em; overflow: hidden; }
+iframe { display: block; border: 0 none; height: calc(100% - 2em - 1px); }
 </style>
 <script type="text/javascript" src="members.js"></script>
 <script type="text/javascript">
@@ -96,9 +94,9 @@ function exit() {
 </script>
 </head>
 <body>
-<div id="bar">
-<button onclick="selectPrev()" title="previous member site">⮜⮜ prev</button>
-<script type="text/javascript">
+<div id="bar"><button
+ onclick="selectPrev()" title="previous member site">⮜⮜ prev</button><script
+ type="text/javascript">
 let code = '';
 for(let m of mList) {
     code +=  '<option id="' + m.id + '" value="' + m.url
@@ -109,14 +107,14 @@ for(let m of mList) {
 document.write(
     '<select size="1"  onchange="select(this.options[this.selectedIndex].id)">'
         + code + '</select>');
-</script>
-<button onclick="selectNext()" title="next member site">next ⮞⮞</button>
-<button onclick="selectRandom()" title="random member site">🎲 random</button>
-<button onclick="select('6ring')" title="ring home">🦋 home</button>
-<button onclick="select('irc')" title="IRC chat">💬 chat</button>
-<button onclick="exit()" title="unload ring">❌ exit</button>
-<button onclick="navigate('https://github.com/6ring/6ring.github.io/issues')" title="bug tracker">🐞 bugs</button>
-</div>
+</script><button
+ onclick="selectNext()" title="next member site">next ⮞⮞</button><button
+ onclick="selectRandom()" title="random member site">🎲 random</button><button
+ onclick="select('6ring')" title="ring home">🦋 home</button><button
+ onclick="select('irc')" title="IRC chat">💬 chat</button><button
+ onclick="exit()" title="unload ring">❌ exit</button><button
+ onclick="navigate('https://github.com/6ring/6ring.github.io/issues')"
+ title="bug tracker">🐞 bugs</button></div>
 <iframe id="frame" src="home.html"></iframe>
 </body>
 </html>

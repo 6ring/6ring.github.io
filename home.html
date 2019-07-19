@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ring Home</title>
 <style type="text/css">
-body { font-family: sans-serif; padding-left: 1em; max-width: calc(40em + 261px); margin: auto; margin-bottom: 4em; }
-h1 { font-size: 2em; }
+body { font-family: sans-serif; padding-left: 1em; max-width: 44em; margin: auto; padding: 1em; padding-bottom: 4em; }
+h1 { font-size: 2em; margin-top: 0; }
 h2 { font-size: 1.5em; margin-top: 1.5em; }
 dl { margin-left: 1em; }
 dd { margin: 0.5em 0 1.5em 2.5em; }
 a { text-decoration: none; }
-p { max-width: 42em; }
+pre { margin-left: 2em; }
 p a:before { content: '\21BA\A0' }
-#camelia { margin-right: 1em; float: right; }
+#camelia { margin-right: -10em; float: right; }
 </style>
 <script type="text/javascript" src="members.js"></script>
 <script type="text/javascript" src="6ring.js"></script>
@@ -45,15 +45,13 @@ To join the ring, all that has to be done is adding your site to the list found 
 <p>
 To improve discoverability, it would help if you could embed the following links in your site:
 </p>
-<pre>    https://6ring.github.io/?<i>&lt;your-site-id&gt;</i>
-    https://6ring.github.io/prev?<i>&lt;your-site-id&gt;</i>
-    https://6ring.github.io/next?<i>&lt;your-site-id&gt;</i></pre>
+<pre>https://6ring.github.io/?<i>&lt;your-site-id&gt;</i>
+https://6ring.github.io/prev?<i>&lt;your-site-id&gt;</i>
+https://6ring.github.io/next?<i>&lt;your-site-id&gt;</i></pre>
 <p>
 You might also want to add the following code to <em>all</em> of your pages:
 </p>
-<pre>
-    &lt;script src="https://6ring.github.io/6ring.js" type="text/javascript"&gt;&lt;/script&gt;
-</pre>
+<pre>&lt;script src="https://6ring.github.io/6ring.js" type="text/javascript"&gt;&lt;/script&gt;</pre>
 <p>
 This will enable better integration with the ring navigation, otherwise prohibited by the same-origin policy.
 
