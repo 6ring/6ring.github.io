@@ -25,7 +25,10 @@ if(top != self)
 var currentId = location.search.substring(1) || '6ring';
 onpopstate = function(event) { select(event.state.id, true) };
 
-addEventListener('DOMContentLoaded', function(even) { select(currentId, true) });
+addEventListener('DOMContentLoaded', function(event) {
+    document.getElementById(currentId).selected = true;
+});
+
 addEventListener('message', function(event) {
     switch(event.data.action) {
         case 'clear':
@@ -123,6 +126,9 @@ document.write(
  onclick="select('irc')" title="IRC chat">💬 chat</button><button
  onclick="exit()" title="unload ring">❌ exit</button><button
  onclick="navigate('https://github.com/6ring/6ring.github.io/issues')" title="bug tracker">🐞 bugs</button></div>
-<iframe id="frame" src="home.html"></iframe>
+ <script type="text/javascript">
+document.write('<iframe id="frame" src="' + mHash[currentId].url + '"></iframe>');
+ </script>
+ <noscript><div>ENOJAVASCRIPT</div></noscript>
 </body>
 </html>
