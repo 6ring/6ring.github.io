@@ -54,7 +54,7 @@ class MemberList {
 
 var members = new MemberList(2, [
     // infrastructural sites, not part of the ring proper
-    [ "🦋", "6ring", "Ring Home", "home.html" ],
+    [ "🦋", "home", "Ring Home", "home.html" ],
     [ "💬", "irc", "Ring Chat", "https://webchat.freenode.net/#perl6-webring" ],
 
     // member sites
