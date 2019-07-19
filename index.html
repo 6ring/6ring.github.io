@@ -28,10 +28,12 @@ iframe { display: block; border: 0 none; height: calc(100% - 2em - 1px); }
     let member = mHash[currentId];
     var currentUrl = member.url;
 
-    if(url && url.startsWith(currentUrl)) {
+    if(url && url.startsWith(currentUrl))
         currentUrl = url;
-        history.replaceState({ url: currentUrl }, member.name, '?' + currentId);
-    }
+
+    let address = currentId == '6ring' ? '?' : '?' + id;
+    let state = { id: currentId, url: currentUrl };
+    history.replaceState(state, member.name, address);
 }
 
 addEventListener('unload', function(event) { self.name = '' });
@@ -46,8 +48,10 @@ addEventListener('message', function(event) {
 });
 
 function update(event) {
-    if(history.state && history.state.url)
+    if(history.state && history.state.url) {
+        currentId = history.state.id;
         currentUrl = history.state.url;
+    }
 
     document.title = '6ring · ' + mHash[currentId].name;
     document.getElementById(currentId).selected = true;
@@ -70,7 +74,7 @@ function select(id, replace, event) {
     currentId = id;
     let m = mHash[id];
     let address = id == '6ring' ? '?' : '?' + id;
-    let state = { url: m.url };
+    let state = { id: id, url: m.url };
 
     if(replace) history.replaceState(state, m.name, address);
     else history.pushState(state, m.name, address);
