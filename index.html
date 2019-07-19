@@ -24,7 +24,15 @@ if(top != self)
 
 var currentId = location.search.substring(1) || '6ring';
 onpopstate = function(event) { select(event.state.id, true) };
+
 addEventListener('DOMContentLoaded', function(even) { select(currentId, true) });
+addEventListener('message', function(event) {
+    switch(event.data.action) {
+        case 'clear':
+        clearTimeout(event.data.timer);
+        break;
+    }
+});
 
 function letItPass(event) {
     if(event.ctrlKey || event.shiftKey)
@@ -86,12 +94,8 @@ function navigate(url, event) {
 }
 
 function exit() {
-    let url = location.href;
-    frames[0].postMessage('exit', '*');
-    setTimeout(function() {
-        if(location.href === url)
-            navigate(mHash[currentId].url);
-    }, 100);
+    let timer = setTimeout(function() { navigate(mHash[currentId].url) }, 100);
+    frames[0].postMessage({ action: 'exit', timer: timer }, '*');
 }
 </script>
 </head>

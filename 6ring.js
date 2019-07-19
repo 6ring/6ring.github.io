@@ -1,6 +1,9 @@
 window.addEventListener('message', function(event) {
-   if(event.origin === 'https://6ring.github.io') switch(event.data) {
+   if(event.origin === 'https://6ring.github.io') switch(event.data.action) {
         case 'exit':
+        top.postMessage(
+            { action: 'clear', timer: event.data.timer },
+            'https://6ring.github.io');
         top.location = self.location;
         break;
     }
