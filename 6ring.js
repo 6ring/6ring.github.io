@@ -23,6 +23,8 @@ const SIXRING_WIDGET = `<span style="display: inline-block" id="sixring-widget"
 ></span>`;
 
 document.addEventListener('DOMContentLoaded', function(event) {
+    if(!SIXRING_ID) return;
+
     let msg = {
         type: 'loaded',
         id: SIXRING_ID,
@@ -39,7 +41,7 @@ document.addEventListener('click', function(event) {
     let href = tg.href;
     if(!href) return;
 
-    if(href === 'https://6ring.github.io/?' + SIXRING_ID) {
+    if(SIXRING_ID && href === 'https://6ring.github.io/?' + SIXRING_ID) {
         tg.href = href + '#' + document.URL;
     }
     else {
