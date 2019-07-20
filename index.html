@@ -19,25 +19,50 @@ iframe { display: block; border: 0 none; height: calc(100% - 2em - 1px); }
 if(top !== self)
     top.location = self.location;
 
+class State {
+    constructor(object) { this.object = object }
+
+    get id() { return this.object.id }
+    get url() { return this.object.url }
+    get title() { return this.object.title }
+    get address() { return this.id === 'home' ? '?' : '?' + this.id }
+
+    load(push) {
+        let obj = this.object;
+        let title = `6ring · ${this.title}`;
+
+        if(push) history.pushState(obj, title, this.address);
+        else history.replaceState(obj, title, this.address);
+
+        document.title = title;
+        document.getElementById(this.id).selected = true;
+        frames[0].location.replace(this.url);
+    }
+
+    static get current() {
+        return history.state ? new State(history.state) : null;
+    }
+
+    static create(id, url, title) {
+        return new State({ id, url, title });
+    }
+}
+
+for(let member of members.list)
+    member.state = State.create(member.id, member.url, member.name);
+
 addEventListener('popstate', function(event) {
-    load(members.get(event.state.id), event.state.url, false);
+    State.current.load(false);
 });
 
 addEventListener('DOMContentLoaded', function(event) {
-    let member, url;
-    if(history.state) {
-        member = members.get(history.state.id);
-        url = history.state.url;
-    }
-    else {
-        member = members.get(location.search.substring(1) || 'home');
-        url = member.url;
-    }
-
-    load(member, url, false);
+    (State.current || members.get(location.search.substring(1) || 'home').state)
+        .load(false);
 });
 
 addEventListener('message', function(event) {
+    console.log('TODO');
+/*
     const BASE = 'https://6ring.github.io/';
     let data = event.data;
     switch(data.type) {
@@ -67,38 +92,20 @@ addEventListener('message', function(event) {
         else location.href = data.url;
         break;
     }
+*/
 });
 
-function push(url) {
-    if(url !== history.state.url) {
-        history.pushState({ id: history.state.id, url: url },
-            document.title, location.search);
-    }
-}
-
-function load(member, url, push) {
-    let id = member.id;
-    let title = `6ring · ${member.name}`;
-    let address = '?' + (id === 'home' ? '' : id);
-    let state = { id: id, url: url };
-
-    if(push) history.pushState(state, title, address);
-    else history.replaceState(state, title, address);
-
-    document.title = title;
-    document.getElementById(id).selected = true;
-    frames[0].location.replace(url);
-}
-
-function select(member) {
-    load(member, member.url, true);
-}
+function load(id) { members.get(id).state.load(true) }
+function loadPrev() { members.prev(history.state.id).state.load(true) }
+function loadNext() { members.next(history.state.id).state.load(true) }
+function loadRandom() { members.random(history.state.id).state.load(true) }
+function exit(url) { location.href = url }
 
 let optionHTML = m =>
     `<option id="${m.id}" value="${m.id}">${m.icon} ${m.name}</option>`;
 
 let selectHTML = code =>
-    `<select size="1" class="shown" onchange="select(members.get(this.value))">${code}</select>`;
+    `<select size="1" class="shown" onchange="load(this.value)">${code}</select>`;
 </script>
 </head>
 <body>
@@ -112,30 +119,30 @@ let selectHTML = code =>
   class="hidden"
   title="show navigation">≡ ▷</button
 ><button
-  onclick="select(members.prev(history.state.id))"
+  onclick="loadPrev()"
   class="shown"
   title="previous member site">⮜⮜ prev</button
 ><script type="text/javascript">
 document.write(selectHTML(members.list.map(optionHTML).join('')));
 </script
 ><button
-  onclick="select(members.next(history.state.id))"
+  onclick="loadNext()"
   class="shown"
   title="next member site">next ⮞⮞</button
 ><button
- onclick="select(members.random(history.state.id))"
+ onclick="loadRandom()"
  title="random member site">🎲 random</button
 ><button
-  onclick="select(members.get('home'))"
+  onclick="load('home')"
   title="ring home">🦋 home</button
 ><button
-  onclick="select(members.get('chat'))"
+  onclick="load('chat')"
   title="IRC chat">💬 chat</button
 ><button
-  onclick="location.href = history.state.url"
+  onclick="exit(history.state.url)"
   title="unload ring">❌ exit</button
 ><button
-  onclick="location.href = 'https://github.com/6ring/6ring.github.io/issues'"
+  onclick="exit('https://github.com/6ring/6ring.github.io/issues')"
   title="bug tracker">🐞 bugs</button
 ></div>
 <iframe src="about:blank"></iframe>
