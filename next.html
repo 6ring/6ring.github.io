@@ -3,6 +3,8 @@
 <title>6ring next</title>
 <script type="text/javascript" src="members.js"></script>
 <script type="text/javascript">
-location.replace(members.next(location.search.substring(1)).url);
+let member = members.next(location.search.substring(1));
+if(top.name === 'sixring') top.load(member, member.url, true);
+else location.replace(member.url);
 </script>
 <noscript>ENOJAVASCRIPT</noscript>
