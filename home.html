@@ -11,9 +11,12 @@ h2 { font-size: 1.5em; margin-top: 1.5em; }
 dl { margin-left: 1em; }
 dd { margin: 0.5em 0 1.5em 2.5em; }
 a { text-decoration: none; }
-pre { margin-left: 2em; overflow: auto; }
+pre { margin-left: 2em; overflow: auto; color: teal; }
 p { max-width: 42em; }
 p a:before { content: '\21BA\A0' }
+pre a { text-decoration: underline; }
+.red { color: red; }
+.black { color: black; }
 #camelia { float: right; }
 </style>
 <script type="text/javascript" src="members.js"></script>
@@ -40,22 +43,26 @@ document.write(`<dl>${code}</dl>`);
 </script>
 <h2>Join Us Now!</h2>
 <p>
-To join the ring, all that has to be done is adding your site to the list found at the end of <a href="https://github.com/6ring/6ring.github.io/blob/master/members.js">this Javascript file</a> in our GitHub repository.
+To join the ring, two things have to be done: First, adding your site to the member list found at the end of <a href="https://github.com/6ring/6ring.github.io/blob/master/members.js">this Javascript file</a> in our GitHub repository.
 </p>
 <p>
-To improve discoverability, it would help if you could embed the following links in your site:
+Second, adding links to the previous and next members of the ring
 </p>
-<pre>https://6ring.github.io/?<i>&lt;your-site-id&gt;</i>
-https://6ring.github.io/prev?<i>&lt;your-site-id&gt;</i>
-https://6ring.github.io/next?<i>&lt;your-site-id&gt;</i></pre>
+<pre>https://6ring.github.io/prev?<em class="red">[your-site-id]</em>
+https://6ring.github.io/next?<em class="red">[your-site-id]</em></pre>
 <p>
-You might also want to add the following code to <em>all</em> of your pages:
+to your site as well as a link to the webring navigation
 </p>
-<pre>&lt;script src="https://6ring.github.io/6ring.js" type="text/javascript"&gt;&lt;/script&gt;</pre>
+<pre>https://6ring.github.io/?<em class="red">[your-site-id]</em></pre>
 <p>
-This will enable better integration with the ring navigation, otherwise prohibited by the same-origin policy.
-
-Some further details can be found in our <a href="https://github.com/6ring/6ring.github.io/blob/master/README.md">README file</a>.
+It is recommended that you also place the following script in <em>all</em> of your pages' headers
 </p>
+<pre>&lt;script type="text/javascript" data-sixring-id="<em class="red">[your-site-id]</em>"
+        src="<a href="https://github.com/6ring/6ring.github.io/blob/master/6ring.js">https://6ring.github.io/6ring.js</a>"&gt;&lt;/script&gt;</pre>
+<p>
+This will enable better integration with the ring navigation otherwise prohibited by the same-origin policy, and provides a widget you can use instead of manual links. To do that, insert
+</p>
+<pre>&lt;script type="text/javascript"&gt;<span class="black">document.write(SIXRING_WIDGET)</span>&lt;/script&gt;</pre>
+<p>where you want the widget to appear.</p>
 </body>
 </html>
