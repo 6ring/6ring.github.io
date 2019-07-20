@@ -41,8 +41,9 @@ document.addEventListener('click', function(event) {
     let href = tg.href;
     if(!href) return;
 
-    if(SIXRING_ID && href === 'https://6ring.github.io/?' + SIXRING_ID) {
-        tg.href = href + '#' + document.URL;
+    if(href.startsWith('https://6ring.github.io/')) {
+        if(SIXRING_ID && href === 'https://6ring.github.io/?' + SIXRING_ID)
+            tg.href = href + '#' + document.URL;
     }
     else {
         let origin = new URL(href, location.href).origin;
