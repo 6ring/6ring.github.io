@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>6ring · Ring Home</title>
+<title>6ring</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <style type="text/css">
 html, body, iframe { margin: 0; padding: 0; width: 100%; height: 100%; }
@@ -16,136 +16,49 @@ iframe { display: block; border: 0 none; height: calc(100% - 2em - 1px); }
 </style>
 <script type="text/javascript" src="members.js"></script>
 <script type="text/javascript">
-{
-    if(top != self)
-        top.location = self.location;
-
-    self.name = 'sixring';
-
-    let [id, url] = location.search.substring(1).split('&', 2);
-    var currentId = id || '6ring';
-
-    let member = mHash[currentId];
-    var currentUrl = member.url;
-
-    if(url && url.startsWith(currentUrl))
-        currentUrl = url;
-
-    let address = currentId == '6ring' ? '?' : '?' + id;
-    let state = { id: currentId, url: currentUrl };
-    history.replaceState(state, member.name, address);
-}
-
-addEventListener('unload', function(event) { self.name = '' });
-addEventListener('DOMContentLoaded', update);
-addEventListener('popstate', update);
-addEventListener('message', function(event) {
-    switch(event.data.action) {
-        case 'clear':
-        clearTimeout(event.data.timer);
-        break;
-    }
-});
-
-function update(event) {
-    if(history.state && history.state.url) {
-        currentId = history.state.id;
-        currentUrl = history.state.url;
-    }
-
-    document.title = '6ring · ' + mHash[currentId].name;
-    document.getElementById(currentId).selected = true;
-    frames[0].location.replace(currentUrl);
-}
-
-function letItPass(event) {
-    if(event.ctrlKey || event.shiftKey)
-        return true;
-
-    event.stopPropagation();
-    event.preventDefault();
-    return false;
-}
-
-function select(id, replace, event) {
-    if(event && letItPass(event))
-        return;
-
-    currentId = id;
-    let m = mHash[id];
-    let address = id == '6ring' ? '?' : '?' + id;
-    let state = { id: id, url: m.url };
-
-    if(replace) history.replaceState(state, m.name, address);
-    else history.pushState(state, m.name, address);
-
-    document.getElementById(id).selected = true;
-    document.title = '6ring · ' + m.name;
-    frames[0].location.replace(m.url);
-}
-
-function selectRandom(event) {
-    if(event && letItPass(event))
-        return;
-
-    let idx = Math.floor(Math.random() * (mList.length - mHead - 1)) + mHead;
-    if(idx >= mHash[currentId].pos) ++idx;
-    select(mList[idx].id);
-}
-
-function selectNext(event) {
-    if(event && letItPass(event))
-        return;
-
-    let pos = mHash[currentId].pos + 1;
-    select(mList[mHead <= pos && pos < mList.length ? pos : mHead].id);
-}
-
-function selectPrev(event) {
-    if(event && letItPass(event))
-        return;
-
-    let pos = mHash[currentId].pos - 1;
-    select(mList[pos >= mHead ? pos : mList.length - 1].id);
-}
-
-function navigate(url, event) {
-    if(event && letItPass(event))
-        return;
-
-    location.href = url;
-}
-
-function exit() {
-    let timer = setTimeout(function() { navigate(mHash[currentId].url) }, 100);
-    frames[0].postMessage({ action: 'exit', timer: timer }, '*');
-}
+// TODO
 </script>
 </head>
 <body>
-<div id="bar" class="open"><button
- onclick="this.parentNode.className = 'closed'" title="hide navigation" class="shown">◁ ≡</button><button
- onclick="this.parentNode.className = 'open'" title="show navigation" class="hidden">≡ ▷</button><button
- onclick="selectPrev()" title="previous member site" class="shown">⮜⮜ prev</button><script
- type="text/javascript">
-let code = '';
-for(let m of mList) {
-    code +=  '<option id="' + m.id + '" value="' + m.url
-        + '" data-name="' + m.name + '">'
-        + m.icon + ' ' + m.name + '</option>';
-}
-
+<div id="bar" class="open"
+><button
+  onclick="this.parentNode.className = 'closed'"
+  class="shown"
+  title="hide navigation">◁ ≡</button
+><button
+  onclick="this.parentNode.className = 'open'"
+  class="hidden"
+  title="show navigation">≡ ▷</button
+><button
+  onclick="select(members.prev(state.id))"
+  class="shown"
+  title="previous member site">⮜⮜ prev</button
+><script type="text/javascript">
+let code = members.list.map(m =>
+    `<option id="${m.id}" value="${m.id}">${m.icon} ${m.name}</option>`).join('');
 document.write(
-    '<select size="1" class="shown" '
-        + 'onchange="select(this.options[this.selectedIndex].id)">'
-        + code + '</select>');
-</script><button
- onclick="selectNext()" title="next member site" class="shown">next ⮞⮞</button><button
- onclick="selectRandom()" title="random member site">🎲 random</button><button
- onclick="select('6ring')" title="ring home">🦋 home</button><button
- onclick="select('irc')" title="IRC chat">💬 chat</button><button
- onclick="exit()" title="unload ring">❌ exit</button><button
- onclick="navigate('https://github.com/6ring/6ring.github.io/issues')" title="bug tracker">🐞 bugs</button></div>
+    `<select size="1" class="shown" onchange="select(members.get(this.value))">${code}</select>`);
+</script
+><button
+  onclick="select(members.next(state.id))"
+  class="shown"
+  title="next member site">next ⮞⮞</button
+><button
+ onclick="select(members.random(state.id))"
+ title="random member site">🎲 random</button
+><button
+  onclick="select(members.get('home'))"
+  title="ring home">🦋 home</button
+><button
+  onclick="select(members.get('chat'))"
+  title="IRC chat">💬 chat</button
+><button
+  onclick="exit()"
+  title="unload ring">❌ exit</button
+><button
+  onclick="location.href = 'https://github.com/6ring/6ring.github.io/issues'"
+  title="bug tracker">🐞 bugs</button
+></div>
 <iframe src="about:blank"></iframe>
 </body>
 </html>
