@@ -40,8 +40,43 @@ addEventListener('DOMContentLoaded', function(event) {
 });
 
 addEventListener('message', function(event) {
-    // TODO
+    const BASE = 'https://6ring.github.io/';
+    let data = event.data;
+    switch(data.type) {
+        case 'loaded':
+        document.title = `6ring · ${data.title}`;
+        push(data.url);
+        break;
+
+        case 'go':
+        if(data.url.startsWith(BASE)) {
+            let [action, id] = data.url.substring(BASE.length).split('?', 2);
+            switch(action) {
+                case '': {
+                    let member = members.get(id);
+                    let referrer = data.referrer;
+                    load(member, referrer.startsWith(member.url)
+                        ? referrer : member.url, true);
+                }
+                break;
+
+                case 'next': select(members.next(id)); break;
+                case 'prev': select(members.prev(id)); break;
+            }
+        }
+        else if(data.url.startsWith(members.get(history.state.id).url))
+            push(data.url);
+        else location.href = data.url;
+        break;
+    }
 });
+
+function push(url) {
+    if(url !== history.state.url) {
+        history.pushState({ id: history.state.id, url: url },
+            document.title, location.search);
+    }
+}
 
 function load(member, url, push) {
     let id = member.id;
@@ -96,7 +131,7 @@ document.write(
   onclick="select(members.get('chat'))"
   title="IRC chat">💬 chat</button
 ><button
-  onclick="exit()"
+  onclick="location.href = history.state.url"
   title="unload ring">❌ exit</button
 ><button
   onclick="location.href = 'https://github.com/6ring/6ring.github.io/issues'"

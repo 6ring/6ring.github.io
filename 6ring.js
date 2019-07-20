@@ -1,18 +1,7 @@
-addEventListener('message', function(event) {
-   if(event.origin === 'https://6ring.github.io') switch(event.data.action) {
-        case 'exit':
-        top.postMessage(
-            { action: 'load-url', url: location.href, referrer: location.href },
-            'https://6ring.github.io'
-        );
-        break;
-    }
-});
-
 addEventListener('DOMContentLoaded', function(event) {
     if(top.name === 'sixring') {
         top.postMessage(
-            { action: 'set-title', title: document.title },
+            { type: 'loaded', title: document.title, url: document.URL },
             'https://6ring.github.io'
         );
     }
@@ -21,8 +10,9 @@ addEventListener('DOMContentLoaded', function(event) {
 addEventListener('beforeunload', function(event) {
     let url = document.activeElement.href || document.activeElement.dataset.href;
     if(url && top.name === 'sixring') {
+        url = new URL(url, document.URL).href;
         top.postMessage(
-            { action: 'load-url', url: url, referrer: location.href },
+            { type: 'go', url: url, referrer: document.URL },
             'https://6ring.github.io'
         );
     }
