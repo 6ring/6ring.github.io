@@ -36,7 +36,7 @@ If you want to keep up with all the things happening in the Perl 6 world in othe
 let code = '';
 for(let i = members.head; i < members.length; ++i) {
     let member = members.list[i];
-    code += `<dt><a href="${member.url}">${member.icon} ${member.name}</a></dt><dd>${member.description}</dd>`;
+    code += `<dt><a href="${member.url}" onclick="top.load('${member.id}'); return false">${member.icon} ${member.name}</a></dt><dd>${member.description}</dd>`;
 
 }
 document.write(`<dl>${code}</dl>`);
