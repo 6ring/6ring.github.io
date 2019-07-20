@@ -5,20 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>6ring</title>
 <link rel="icon" type="image/png" href="favicon.png">
-<style type="text/css">
-html, body, iframe { margin: 0; padding: 0; width: 100%; height: 100%; }
-button, select { border: 0 none; height: calc(100% - 1px); margin: 0; }
-button { cursor: pointer; }
-#bar { border-bottom: 1px solid black; background: buttonface; height: 2em; overflow: hidden; }
-iframe { display: block; border: 0 none; height: calc(100% - 2em - 1px); }
-.open .hidden { display: none; }
-.closed .shown { display: none; }
-</style>
 <script type="text/javascript" src="members.js"></script>
 <script type="text/javascript">
-if(top !== self)
-    top.location = self.location;
-
 class State {
     constructor(object) { this.object = object }
 
@@ -39,6 +27,13 @@ class State {
         frames[0].location.replace(this.url);
     }
 
+    update() {
+        let title = `6ring · ${this.title}`;
+        history.replaceState(this.object, title, this.address);
+        document.title = title;
+        document.getElementById(this.id).selected = true;
+    }
+
     static get current() {
         return history.state ? new State(history.state) : null;
     }
@@ -51,49 +46,25 @@ class State {
 for(let member of members.list)
     member.state = State.create(member.id, member.url, member.name);
 
-addEventListener('popstate', function(event) {
-    State.current.load(false);
-});
+if(top !== self) {
+    let child = false;
+    try { child = top.location.origin === 'https://6ring.github.io' }
+    catch(e) {}
 
-addEventListener('DOMContentLoaded', function(event) {
-    (State.current || members.get(location.search.substring(1) || 'home').state)
-        .load(false);
-});
-
-addEventListener('message', function(event) {
-    console.log('TODO');
-/*
-    const BASE = 'https://6ring.github.io/';
-    let data = event.data;
-    switch(data.type) {
-        case 'loaded':
-        document.title = `6ring · ${data.title}`;
-        push(data.url);
-        break;
-
-        case 'go':
-        if(data.url.startsWith(BASE)) {
-            let [action, id] = data.url.substring(BASE.length).split('?', 2);
-            switch(action) {
-                case '': {
-                    let member = members.get(id);
-                    let referrer = data.referrer;
-                    load(member, referrer.startsWith(member.url)
-                        ? referrer : member.url, true);
-                }
-                break;
-
-                case 'next': select(members.next(id)); break;
-                case 'prev': select(members.prev(id)); break;
-            }
-        }
-        else if(data.url.startsWith(members.get(history.state.id).url))
-            push(data.url);
-        else location.href = data.url;
-        break;
+    if(child) {
+        top.visit(self.location);
+        self.stop();
     }
-*/
-});
+    else top.location = self.location;
+}
+
+function visit(locus) {
+    let id = locus.search.substring(1) || 'home';
+    let member = members.get(id);
+    let hash = locus.hash.substring(1);
+    let url = hash.startsWith(member.url) ? hash : member.url;
+    State.create(id, url, member.name).load();
+}
 
 function load(id) { members.get(id).state.load(true) }
 function loadPrev() { members.prev(history.state.id).state.load(true) }
@@ -101,12 +72,39 @@ function loadNext() { members.next(history.state.id).state.load(true) }
 function loadRandom() { members.random(history.state.id).state.load(true) }
 function exit(url) { location.href = url }
 
+document.addEventListener('DOMContentLoaded', function(event) {
+    if(State.current) State.current.load();
+    else visit(location);
+});
+
+window.addEventListener('popstate', function(event) {
+    State.current.load();
+});
+
+window.addEventListener('message', function(event) {
+    let data = event.data;
+    switch(data.type) {
+        case 'loaded':
+        State.create(data.id, data.url, data.title).update();
+        break;
+    }
+});
+
 let optionHTML = m =>
     `<option id="${m.id}" value="${m.id}">${m.icon} ${m.name}</option>`;
 
 let selectHTML = code =>
     `<select size="1" class="shown" onchange="load(this.value)">${code}</select>`;
 </script>
+<style type="text/css">
+html, body, iframe { margin: 0; padding: 0; width: 100%; height: 100%; }
+button, select { border: 0 none; height: calc(100% - 1px); margin: 0; }
+button { cursor: pointer; }
+#bar { border-bottom: 1px solid black; background: buttonface; height: 2em; overflow: hidden; }
+iframe { display: block; border: 0 none; height: calc(100% - 2em - 1px); }
+.open .hidden { display: none; }
+.closed .shown { display: none; }
+</style>
 </head>
 <body>
 <div id="bar" class="open"

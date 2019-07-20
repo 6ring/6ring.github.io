@@ -2,7 +2,7 @@ const SIXRING_ID = document.currentScript.dataset.sixringId;
 const SIXRING_WIDGET = `<span style="display: inline-block" id="sixring-widget"
 ><button
   data-href="https://6ring.github.io/"
-  onclick="location.href = this.dataset.href"
+  onclick="top.location.href = this.dataset.href"
   style="cursor: pointer; border: 0 none; background: transparent; display: block"
   title="visit ring homepage">🦋 <b>Perl 6</b> webring</button
 ><button
@@ -11,7 +11,7 @@ const SIXRING_WIDGET = `<span style="display: inline-block" id="sixring-widget"
   style="cursor: pointer; width: 6em"
   title="visit previous site in ring">⮜⮜ prev</button
 ><button
-  data-href="https://6ring.github.io/?${SIXRING_ID}"
+  data-href="https://6ring.github.io/?${SIXRING_ID}#${document.URL}"
   onclick="location.href = this.dataset.href"
   style="cursor: pointer; width: 6em"
   title="load ring toolbar">🔗 load</button
@@ -22,30 +22,29 @@ const SIXRING_WIDGET = `<span style="display: inline-block" id="sixring-widget"
   title="visit next site in ring">next ⮞⮞</button
 ></span>`;
 
-addEventListener('DOMContentLoaded', function(event) {
+document.addEventListener('DOMContentLoaded', function(event) {
     let msg = {
         type: 'loaded',
         id: SIXRING_ID,
-        title: document.title,
         url: document.URL,
+        title: document.title,
     };
 
     try { top.postMessage(msg, 'https://6ring.github.io') }
     catch(e) {}
 });
 
-addEventListener('beforeunload', function(event) {
-    let url = document.activeElement.href || document.activeElement.dataset.href;
-    if(url) {
-        url = new URL(url, document.URL).href;
-        let msg = {
-            type: 'go',
-            id: SIXRING_ID,
-            dest: url,
-            src: document.URL,
-        };
+document.addEventListener('click', function(event) {
+    let tg = event.target;
+    let href = tg.href;
+    if(!href) return;
 
-        try { top.postMessage(msg, 'https://6ring.github.io') }
-        catch(e) {}
+    if(href === 'https://6ring.github.io/?' + SIXRING_ID) {
+        tg.href = href + '#' + document.URL;
     }
-});
+    else {
+        let origin = new URL(href, location.href).origin;
+        if(origin !== location.origin && !tg.target)
+            tg.target = '_top';
+    }
+}, true);

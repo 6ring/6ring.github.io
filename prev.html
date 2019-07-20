@@ -4,13 +4,13 @@
 <script type="text/javascript" src="members.js"></script>
 <script type="text/javascript">
 let member = members.prev(location.search.substring(1));
-let framed = false;
+let child = false;
 if(top !== self) {
-    try { framed = top.location.origin === 'https://6ring.github.io' }
+    try { child = top.location.origin === 'https://6ring.github.io' }
     catch(e) {}
 }
 
-if(framed) top.load(member.id);
+if(child) top.load(member.id);
 else location.replace(member.url);
 </script>
 <noscript>ENOJAVASCRIPT</noscript>
