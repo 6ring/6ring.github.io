@@ -16,10 +16,8 @@ iframe { display: block; border: 0 none; height: calc(100% - 2em - 1px); }
 </style>
 <script type="text/javascript" src="members.js"></script>
 <script type="text/javascript">
-if(top != self) top.location = self.location;
-self.name = 'sixring';
-
-addEventListener('unload', function(event) { self.name = '' });
+if(top !== self)
+    top.location = self.location;
 
 addEventListener('popstate', function(event) {
     load(members.get(event.state.id), event.state.url, false);

@@ -23,21 +23,20 @@ const SIXRING_WIDGET = `<span style="display: inline-block" id="sixring-widget"
 ></span>`;
 
 addEventListener('DOMContentLoaded', function(event) {
-    if(top.name === 'sixring') {
-        let msg = {
-            type: 'loaded',
-            id: SIXRING_ID,
-            title: document.title,
-            url: document.URL,
-        };
+    let msg = {
+        type: 'loaded',
+        id: SIXRING_ID,
+        title: document.title,
+        url: document.URL,
+    };
 
-        top.postMessage(msg, 'https://6ring.github.io');
-    }
+    try { top.postMessage(msg, 'https://6ring.github.io') }
+    catch(e) {}
 });
 
 addEventListener('beforeunload', function(event) {
     let url = document.activeElement.href || document.activeElement.dataset.href;
-    if(url && top.name === 'sixring') {
+    if(url) {
         url = new URL(url, document.URL).href;
         let msg = {
             type: 'go',
@@ -46,6 +45,7 @@ addEventListener('beforeunload', function(event) {
             src: document.URL,
         };
 
-        top.postMessage(msg, 'https://6ring.github.io');
+        try { top.postMessage(msg, 'https://6ring.github.io') }
+        catch(e) {}
     }
 });

@@ -4,7 +4,13 @@
 <script type="text/javascript" src="members.js"></script>
 <script type="text/javascript">
 let member = members.prev(location.search.substring(1));
-if(top.name === 'sixring') top.load(member, member.url, true);
+let framed = false;
+if(top !== self) {
+    try { framed = top.location.origin === 'https://6ring.github.io' }
+    catche(e) {}
+}
+
+if(framed) top.load(member, member.url, true);
 else location.replace(member.url);
 </script>
 <noscript>ENOJAVASCRIPT</noscript>
