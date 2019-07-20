@@ -42,7 +42,7 @@ class MemberList {
     }
 
     random(id) {
-        let idx = this.head
+        let pos = this.head
             + Math.floor(Math.random() * (this.length - this.head - 1));
 
         if(pos >= this.get(id).pos)
