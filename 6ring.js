@@ -1,25 +1,50 @@
-window.addEventListener('message', function(event) {
-   if(event.origin === 'https://6ring.github.io') switch(event.data.action) {
-        case 'exit':
-        top.postMessage(
-            { action: 'clear', timer: event.data.timer },
-            'https://6ring.github.io');
-        top.location = self.location;
-        break;
-    }
-}, false);
+const SIXRING_ID = document.currentScript.dataset.sixringId;
+const SIXRING_WIDGET = `<span style="display: inline-block" id="sixring-widget"
+><button
+  data-href="https://6ring.github.io/"
+  onclick="top.location.href = this.dataset.href"
+  style="cursor: pointer; border: 0 none; background: transparent; display: block"
+  title="visit ring homepage">🦋 <b>Perl 6</b> webring</button
+><button
+  data-href="https://6ring.github.io/prev?${SIXRING_ID}"
+  onclick="location.href = this.dataset.href"
+  style="cursor: pointer; width: 6em"
+  title="visit previous site in ring">⮜⮜ prev</button
+><button
+  data-href="https://6ring.github.io/?${SIXRING_ID}#${document.URL}"
+  onclick="location.href = this.dataset.href"
+  style="cursor: pointer; width: 6em"
+  title="load ring toolbar">🔗 load</button
+><button
+  data-href="https://6ring.github.io/next?${SIXRING_ID}"
+  onclick="location.href = this.dataset.href"
+  style="cursor: pointer; width: 6em"
+  title="visit next site in ring">next ⮞⮞</button
+></span>`;
+
+document.addEventListener('DOMContentLoaded', function(event) {
+    let msg = {
+        type: 'loaded',
+        id: SIXRING_ID,
+        url: document.URL,
+        title: document.title,
+    };
+
+    try { top.postMessage(msg, 'https://6ring.github.io') }
+    catch(e) {}
+});
 
 document.addEventListener('click', function(event) {
-    if(event.target.nodeName.toUpperCase() !== 'A'
-        || event.ctrlKey || event.shiftKey) return;
+    let tg = event.target;
+    let href = tg.href;
+    if(!href) return;
 
-    let url = event.target.href;
-    if(url.startsWith('https://6ring.github.io/?'))
-        url += '&' + location.origin + location.pathname;
-
-    else if(new URL(url, location.href).origin === location.origin
-        || url.startsWith('https://6ring.github.io/')) return;
-
-    event.preventDefault();
-    top.location.href = url;
-}, false);
+    if(href === 'https://6ring.github.io/?' + SIXRING_ID) {
+        tg.href = href + '#' + document.URL;
+    }
+    else {
+        let origin = new URL(href, location.href).origin;
+        if(origin !== location.origin && !tg.target)
+            tg.target = '_top';
+    }
+}, true);
