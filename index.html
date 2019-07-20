@@ -95,6 +95,12 @@ function load(member, url, push) {
 function select(member) {
     load(member, member.url, true);
 }
+
+let optionHTML = m =>
+    `<option id="${m.id}" value="${m.id}">${m.icon} ${m.name}</option>`;
+
+let selectHTML = code =>
+    `<select size="1" class="shown" onchange="select(members.get(this.value))">${code}</select>`;
 </script>
 </head>
 <body>
@@ -112,10 +118,7 @@ function select(member) {
   class="shown"
   title="previous member site">⮜⮜ prev</button
 ><script type="text/javascript">
-let code = members.list.map(m =>
-    `<option id="${m.id}" value="${m.id}">${m.icon} ${m.name}</option>`).join('');
-document.write(
-    `<select size="1" class="shown" onchange="select(members.get(this.value))">${code}</select>`);
+document.write(selectHTML(members.list.map(optionHTML).join('')));
 </script
 ><button
   onclick="select(members.next(history.state.id))"
