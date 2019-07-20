@@ -7,10 +7,10 @@ let member = members.next(location.search.substring(1));
 let framed = false;
 if(top !== self) {
     try { framed = top.location.origin === 'https://6ring.github.io' }
-    catche(e) {}
+    catch(e) {}
 }
 
-if(framed) top.load(member, member.url, true);
+if(framed) top.load(member.id);
 else location.replace(member.url);
 </script>
 <noscript>ENOJAVASCRIPT</noscript>
