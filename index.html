@@ -53,7 +53,7 @@ if(top !== self) {
 
     if(child) {
         top.visit(self.location);
-//        self.stop();
+        throw new Error('stop page load');
     }
     else top.location = self.location;
 }
