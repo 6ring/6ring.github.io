@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<meta charset="utf-8"></meta>
+<title>6ring random</title>
+<script type="text/javascript" src="members.js"></script>
+<script type="text/javascript">
+let member = members.random(location.search.substring(1));
+let child = false;
+if(top !== self) {
+    try { child = top.location.origin === 'https://6ring.github.io' }
+    catch(e) {}
+}
+
+if(child) top.load(member.id);
+else location.replace(member.url);
+</script>
+<noscript>ENOJAVASCRIPT</noscript>
