@@ -10,6 +10,7 @@ going through the webring interface:
     https://6ring.github.io/?<your-site-id>
     https://6ring.github.io/prev?<your-site-id>
     https://6ring.github.io/next?<your-site-id>
+    https://6ring.github.io/random?<your-site-id>
 
 There's also a 'magical' script you might add to your page template:
 
