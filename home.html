@@ -69,9 +69,13 @@ It is recommended that you also place the following script in <em>all</em> of yo
 <pre>&lt;script type="text/javascript" data-sixring-id="<em class="red">[your-site-id]</em>"
         src="<a href="https://github.com/6ring/6ring.github.io/blob/master/6ring.js">https://6ring.github.io/6ring.js</a>"&gt;&lt;/script&gt;</pre>
 <p>
-This will enable better integration with the ring navigation otherwise prohibited by the same-origin policy, and provides <a href="widget.html">a widget</a> you can use instead of manual links. To integrate the latter, insert
+This will enable better integration with the ring navigation otherwise prohibited by the same-origin policy, and provides a widget
+</p>
+<div><script type="text/javascript">document.write(SIXRING_WIDGET)</script></div>
+<p>
+you can use instead of manual links: Just insert
 </p>
 <pre>&lt;script type="text/javascript"&gt;<span class="black">document.write(SIXRING_WIDGET)</span>&lt;/script&gt;</pre>
-<p>where you want the widget to appear.</p>
+<p>where you want the widget to appear!</p>
 </body>
 </html>
