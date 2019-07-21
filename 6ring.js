@@ -8,17 +8,22 @@ const SIXRING_WIDGET = `<span style="display: inline-block" id="sixring-widget"
 ><button
   data-href="https://6ring.github.io/prev?${SIXRING_ID}"
   onclick="location.href = this.dataset.href"
-  style="cursor: pointer; width: 6em"
+  style="cursor: pointer; width: 7em"
   title="visit previous site in ring">⮜⮜ prev</button
 ><button
   data-href="https://6ring.github.io/?${SIXRING_ID}#${document.URL}"
   onclick="location.href = this.dataset.href"
-  style="cursor: pointer; width: 6em"
+  style="cursor: pointer; width: 7em"
   title="load ring toolbar">🔗 load</button
+><button
+  data-href="https://6ring.github.io/random?${SIXRING_ID}"
+  onclick="location.href = this.dataset.href"
+  style="cursor: pointer; width: 7em"
+  title="visit random site in ring">🎲 random</button
 ><button
   data-href="https://6ring.github.io/next?${SIXRING_ID}"
   onclick="location.href = this.dataset.href"
-  style="cursor: pointer; width: 6em"
+  style="cursor: pointer; width: 7em"
   title="visit next site in ring">next ⮞⮞</button
 ></span>`;
 
