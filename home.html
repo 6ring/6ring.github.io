@@ -54,24 +54,22 @@ document.write(`<dl>${code}</dl>`);
 </script>
 <h2>Join Us Now!</h2>
 <p>
-To join the ring, two things have to be done: First, adding your site to the member list found at the end of <a href="https://github.com/6ring/6ring.github.io/blob/master/members.js">this Javascript file</a> in our GitHub repository.
+To join the ring, two things have to be done: First, add your site to the member list found at the end of <a href="https://github.com/6ring/6ring.github.io/blob/master/members.js">this Javascript file</a> in our GitHub repository.
 </p>
 <p>
-Second, adding links to the previous and next members of the ring
+Second, add one or more of the following links to your homepage:
 </p>
-<pre>https://6ring.github.io/prev?<em class="red">[your-site-id]</em>
-https://6ring.github.io/next?<em class="red">[your-site-id]</em></pre>
-<p>
-to your site as well as a link to the webring navigation
-</p>
-<pre>https://6ring.github.io/?<em class="red">[your-site-id]</em></pre>
+<pre>https://6ring.github.io/?<em class="red">[your-site-id]</em>
+https://6ring.github.io/prev?<em class="red">[your-site-id]</em>
+https://6ring.github.io/next?<em class="red">[your-site-id]</em>
+https://6ring.github.io/random?<em class="red">[your-site-id]</em></pre>
 <p>
 It is recommended that you also place the following script in <em>all</em> of your pages' headers
 </p>
 <pre>&lt;script type="text/javascript" data-sixring-id="<em class="red">[your-site-id]</em>"
         src="<a href="https://github.com/6ring/6ring.github.io/blob/master/6ring.js">https://6ring.github.io/6ring.js</a>"&gt;&lt;/script&gt;</pre>
 <p>
-This will enable better integration with the ring navigation otherwise prohibited by the same-origin policy, and provides a widget you can use instead of manual links. To do that, insert
+This will enable better integration with the ring navigation otherwise prohibited by the same-origin policy, and provides <a href="widget.html">a widget</a> you can use instead of manual links. To integrate the latter, insert
 </p>
 <pre>&lt;script type="text/javascript"&gt;<span class="black">document.write(SIXRING_WIDGET)</span>&lt;/script&gt;</pre>
 <p>where you want the widget to appear.</p>
