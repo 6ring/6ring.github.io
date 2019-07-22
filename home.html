@@ -8,12 +8,15 @@
 <script type="text/javascript" src="6ring.js" data-sixring-id="home"></script>
 <script type="text/javascript">
 function load(id) {
-    if(top !== self) try {
-        top.load(id);
-        return false;
-    }
-    catch(e) {}
-    return true,
+    if(top === self)
+        return true;
+    
+    let top_load;
+    try { top_load = top.load }
+    catch(e) { return true; }
+        
+    top_load(id);
+    return false;
 }
 </script>
 <style type="text/css">
