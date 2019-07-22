@@ -62,5 +62,4 @@ var members = new MemberList(2, [
     [ "🔗", "timotimo", "my Timotimo \\this", "https://wakelift.de/", "Progress reports, general musings. Perl 6." ],
     [ "🔗", "6guts", "6guts blog", "https://6guts.wordpress.com/", "Tales of Perl 6 guts hacking" ],
     [ "🔗", "pamplemousse", "Yak Shaving Cream", "https://yakshavingcream.blogspot.com/", "Progress reports and ramblings on Perl 6." ],
-    [ "🔗", "strangelyconsistent", "Strangely Consistent", "http://strangelyconsistent.org/", "Musings about programming, Perl 6, and programming Perl 6" ],
 ]);
