@@ -57,7 +57,7 @@ var members = new MemberList(2, [
     [ "🦋", "home", "Ring Home", "home.html" ],
     [ "💬", "chat", "Ring Chat", "https://webchat.freenode.net/#perl6-webring" ],
 
-    // member sites
+    // member sites, only https supported!
     [ "🔗", "cygx", "cygx's musings", "https://cygx.github.io/", "life, the universe and programming woes" ],
     [ "🔗", "timotimo", "my Timotimo \\this", "https://wakelift.de/", "Progress reports, general musings. Perl 6." ],
     [ "🔗", "6guts", "6guts blog", "https://6guts.wordpress.com/", "Tales of Perl 6 guts hacking" ],
